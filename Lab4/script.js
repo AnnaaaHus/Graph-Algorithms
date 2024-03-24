@@ -58,5 +58,24 @@ function dijkstra(graph, start) {
     return distances;
 }
 
-// Example: Find shortest distances from node A to all other nodes in the graph
-console.log(dijkstra(graph, "1")); 
+
+
+let userResult = document.getElementById("result");
+
+  function Calculations(){
+  
+  let startVertex = document.getElementById("vertex").value;
+  
+
+  if(startVertex < 0 || startVertex > 6){
+    alert("Please enter a valid vertex");
+    return;
+  }
+  if(startVertex === "") {
+    alert("Please enter a vertex");
+    return;
+  }
+  console.log(dijkstra(graph, startVertex));
+  let result = dijkstra(graph, startVertex);
+document.getElementById("result").innerHTML = 'RESULT : '+ JSON.stringify(result);
+}
