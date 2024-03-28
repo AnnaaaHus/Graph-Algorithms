@@ -84,30 +84,50 @@
 
 
 let userResult = document.getElementById("result");
-
+const ValidValue3 = ["трета", "третя","трет'я","три", "тре"];
+const ValidValue5 = ["пята", "пять","пента","п'ять", "пєть"];
+const ValidValue7 = ["семі", "сема","сіма","сім", "сєма"];
   function Calculations(){
-  
+   
   let startVertex = document.getElementById("vertex").value;
-  н
-   if(startVertex === "сема") {
-    startVertex = 7;
-    return;
+
+  if(typeof startVertex === "string"){
+    let checkValue = startVertex.toLowerCase();
+
+    if (ValidValue3.includes(checkValue) ) {
+      console.log(checkValue);
+      console.log("Юхуу.Нарешті, ви ввели третю вершину.Вчіть числа, а не слова.)");
+      startVertex = 3;
+  
+    }
+    if (ValidValue5.includes(checkValue) ) {
+      console.log(checkValue);
+      console.log("Юхуу.Нарешті, ви ввели п'яту вершину.Вчіть числа, а не слова.)");
+      startVertex = 5;
+  
+    }
+    if (ValidValue7.includes(checkValue) ) {
+      console.log(checkValue);
+      console.log("Юхуу.Нарешті, ви ввели сьому вершину.Вчіть числа, а не слова.)");
+      startVertex = 7;
+  
+    }
+
+
   }
+  
+
   if(startVertex === "") {
     alert("Please enter a vertex");
     return;
   }
-  // if(startVertex < 0 || startVertex > 7){
-  //   alert("Please enter a valid vertex");
-  //   return;
-  // }
-  if(Number.isInteger(startVertex) === false){
+  if(startVertex < 0 || startVertex > 7){
     alert("Please enter a valid vertex");
     return;
   }
-  
- 
 
+
+  if(typeof startVertex ==="number"){
   if(document.getElementById("dfs").checked){
 
     document.getElementById("result").innerHTML = 'RESULT : '+ recursiveDFS(graph, startVertex);
@@ -118,4 +138,8 @@ let userResult = document.getElementById("result");
     document.getElementById("result").innerHTML =  'RESULT : '+ BFS(graph, startVertex);
     
   }
+} else {
+  alert("Please enter a valid vertex");
+  return;
+}
 }
