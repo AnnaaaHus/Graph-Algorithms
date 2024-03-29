@@ -91,7 +91,6 @@ const ValidValue7 = ["семі", "сема","сіма","сім", "сєма"];
    
   let startVertex = document.getElementById("vertex").value;
 
-  if(typeof startVertex === "string"){
     let checkValue = startVertex.toLowerCase();
 
     if (ValidValue3.includes(checkValue) ) {
@@ -113,8 +112,6 @@ const ValidValue7 = ["семі", "сема","сіма","сім", "сєма"];
   
     }
 
-
-  }
   
 
   if(startVertex === "") {
@@ -127,7 +124,6 @@ const ValidValue7 = ["семі", "сема","сіма","сім", "сєма"];
   }
 
 
-  if(typeof startVertex ==="number"){
   if(document.getElementById("dfs").checked){
 
     document.getElementById("result").innerHTML = 'RESULT : '+ recursiveDFS(graph, startVertex);
@@ -135,11 +131,8 @@ const ValidValue7 = ["семі", "сема","сіма","сім", "сєма"];
   }
   if(document.getElementById("bfs").checked){
 
-    document.getElementById("result").innerHTML =  'RESULT : '+ BFS(graph, startVertex);
-    
+        document.getElementById("result").innerHTML =  'RESULT : '+ BFS(graph, startVertex);}
+
+
+
   }
-} else {
-  alert("Please enter a valid vertex");
-  return;
-}
-}
