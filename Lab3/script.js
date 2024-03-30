@@ -1,59 +1,75 @@
-function topologicalSort(graph) {
-    const inDegree = new Map();
-    const queue = [];
-    const result = [];
-
-    // Ініціалізуємо inDegree та queue
-    for (const node of graph.nodes) {
-        inDegree.set(node, 0);
+class TopologicalSort {
+    constructor(matrix) {
+      this.verticesCount = matrix.length;
+      this.adjacencyMatrix = matrix;
     }
-    for (const edge of graph.edges) {
-        inDegree.set(edge[1], inDegree.get(edge[1]) + 1);
-    }
-    for (const [node, degree] of inDegree.entries()) {
-        if (degree === 0) {
-            queue.push(node);
+  
+    getIncomingEdgesCount() {
+      const incomingEdgesCount = [];
+      for (let i = 0; i < this.verticesCount; i++) {
+        let count = 0;
+        for (let j = 0; j < this.verticesCount; j++) {
+          if (this.adjacencyMatrix[j][i] !== 0) {
+            count++;
+          }
         }
+        incomingEdgesCount.push(count);
+      }
+      return incomingEdgesCount;
     }
-
-    // Виконуємо сортування
-    while (queue.length > 0) {
-        const node = queue.shift();
-        result.push(node);
-
-        for (const neighbor of graph.adjacencyList.get(node)) {
-            inDegree.set(neighbor, inDegree.get(neighbor) - 1);
-            if (inDegree.get(neighbor) === 0) {
-                queue.push(neighbor);
+  
+    demucronSort() {
+      const incomingEdgesCount = this.getIncomingEdgesCount();
+      const result = [];
+      const levelMap = new Map();
+      let level = 0;
+  
+      while (result.length < this.verticesCount) {
+        const currentLevelNodes = [];
+        for (let i = 0; i < this.verticesCount; i++) {
+          if (incomingEdgesCount[i] === 0) {
+            currentLevelNodes.push(i);
+            incomingEdgesCount[i] = -1;
+          }
+        }
+  
+        if (currentLevelNodes.length === 0) {
+          throw new Error("Graph contains cycles!");
+        }
+  
+        for (const node of currentLevelNodes) {
+          result.push(node);
+          levelMap.set(node, level);
+          for (let i = 0; i < this.verticesCount; i++) {
+            if (this.adjacencyMatrix[node][i] !== 0) {
+              incomingEdgesCount[i]--;
             }
+          }
         }
+        level++;
+      }
+  
+      console.log("Topological sorting using Demucron algorithm:");
+      for (const [key, value] of levelMap.entries()) {
+        console.log(`Vertex ${key + 1} is at level ${value + 1}`);
+      }
+
+      for (const [key, value] of levelMap.entries()) {
+        document.getElementById("result").innerHTML += (`Vertex ${key + 1} is at level ${value + 1}`) + "<br>";
+      }
     }
-
-    // Перевіряємо, чи є цикли в графі
-    if (result.length !== graph.nodes.length) {
-        throw new Error("Граф має цикл");
-    }
-
-    return result;
-}
-
-// Приклад використання
-const graph = {
-    nodes: ['A', 'B', 'C', 'D', 'E'],
-    edges: [['A', 'B'], ['A', 'C'], ['B', 'D'], ['C', 'D'], ['D', 'E']],
-    adjacencyList: new Map([
-        ['A', ['B', 'C']],
-        ['B', ['D']],
-        ['C', ['D']],
-        ['D', ['E']],
-        ['E', []]
-    ])
-};
-
-try {
-    const sortedNodes = topologicalSort(graph);
-    console.log("Відсортовані вершини:", sortedNodes);
-} catch (error) {
-    console.error(error.message);
-}
-45
+  }
+  
+  const graphMatrix = [
+    [0, 1, 0, 0, 0, 1,0],
+    [0, 0, 1, 0, 0, 1,0],
+    [0, 0, 0, 0, 0, 0,0],
+    [0, 0, 0, 0, 1, 0,0],
+    [1, 1, 0, 0, 0, 1,0],
+    [0, 0, 0, 0, 0, 0,1],
+    [0, 0, 0, 0, 0, 0,0],
+  ];
+  
+  const topologicalSort = new TopologicalSort(graphMatrix);
+  topologicalSort.demucronSort();
+;
