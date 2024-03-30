@@ -168,14 +168,18 @@ graph.addEdge("2", "3", 4);
 graph.addEdge("3", "4", 5);
 graph.addEdge("3", "5", 2);
 graph.addEdge("4", "5", 3);
-//console.log(graph.prims("1"));  
+
 
 let userResult = document.getElementById("result");
 
   function Calculations(){
   
+
   let startVertex = document.getElementById("vertex").value;
-  
+  if (isNaN(startVertex) || startVertex < 1 || startVertex > 5) {
+    alert("Please enter a valid vertex (1-5)");
+    return;
+  }
 
   if(startVertex < 1 || startVertex > 5){
     alert("Please enter a valid vertex");
