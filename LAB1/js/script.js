@@ -85,7 +85,7 @@
 
 let userResult = document.getElementById("result");
 const ValidValue3 = ["трета", "третя","трет'я","три", "тре"];
-const ValidValue5 = ["пята", "пять","пента","п'ять", "пєть"];
+const ValidValue5 = ["пята", "пять","пента","п'ять", "пєть", "п'єта","пєта"];
 const ValidValue7 = ["семі", "сема","сіма","сім", "сєма"];
   function Calculations(){
    
